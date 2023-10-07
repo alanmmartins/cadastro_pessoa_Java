@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,6 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         ArrayList<PessoaFisica> listaPf = new ArrayList<>();
+        PessoaFisica metodoPf = new PessoaFisica();
 
         System.out.println("Bem vindo ao sistema de cadastro de Pessoas Físicas e Juridicas");
 
@@ -42,6 +44,14 @@ public class Main {
                                 System.out.println("Digite a data de nascimento : (dd/mm/aaaa) ");
                                 novaPf.dataNasc = LocalDate.parse(leitor.next(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
+                                Period idade = Period.between(novaPf.dataNasc, LocalDate.now());
+                                if (idade.getYears() >= 18 ){
+                                    System.out.println("idade Valida");
+                                }else {
+                                    System.out.println("Idade Invalida");
+                                    break;
+                                }
+
                                 System.out.println("Digite o logradouro : ");
                                 novoEndPf.numero = leitor.nextInt();
 
@@ -67,6 +77,7 @@ public class Main {
                                         System.out.println("Nome" + cadaPf.nome);
                                         System.out.println("CPF" + cadaPf.cpf);
                                         System.out.println("Data de nascimento:" + cadaPf.dataNasc.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                                        System.out.println("Imposto a ser pago : " + metodoPf.CalcularImposto(cadaPf.rendimento));
 
                                         System.out.println("Endereco: " + cadaPf.endereco.logradouro + "-" + cadaPf.endereco.numero);
                                         System.out.println();
